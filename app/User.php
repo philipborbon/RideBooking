@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'lastname', 'email', 'password', 'usertype'
     ];
 
     /**
@@ -26,4 +26,23 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getFullname()
+    {
+      return "{$this->firstname} {$this->lastname}";
+    }
+
+    public function getUserType(){
+        $type = $this->usertype;
+
+        $description = "";
+
+        $types = config('enums.usertype');
+
+        if ( array_key_exists($type, $types) ) {
+            $description = $types[$type];
+        }
+
+        return $description;
+    }
 }
