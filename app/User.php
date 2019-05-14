@@ -2,12 +2,14 @@
 
 namespace RideBooking;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use RideBooking\Vehicle;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +46,13 @@ class User extends Authenticatable
         }
 
         return $description;
+    }
+
+    public function drivers() {
+        return $this->hasMany(Vehicle::class, 'driverid');
+    }
+
+    public function operators() {
+        return $this->hasMany(Vehicle::class, 'operatorid');
     }
 }

@@ -8,6 +8,11 @@ use RideBooking\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +47,7 @@ class UserController extends Controller
             'lastname' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
-            'usertype' => Rule::in(['passenger', 'driver', 'operator'])
+            'usertype' => 'in:passenger,driver,operator'
         ]);
 
         $user['password'] = bcrypt($user['password']);
@@ -88,7 +93,7 @@ class UserController extends Controller
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'required|string|email|unique:users,email,' . $id,
-            'usertype' => Rule::in(['passenger', 'driver', 'operator'])
+            'usertype' => 'in:passenger,driver,operator'
         ]);
 
         $user = User::find($id);
@@ -118,5 +123,21 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect('users')->with('success','User has been  deleted.');
+    }
+
+/** 
+     * login api 
+     * 
+     * @return \Illuminate\Http\Response 
+     */ 
+    public function login(){ 
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
+            $user = Auth::user(); 
+            $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+            return response()->json(['success' => $success], $this-> successStatus); 
+        } 
+        else{ 
+            return response()->json(['error'=>'Unauthorized'], 401); 
+        } 
     }
 }
