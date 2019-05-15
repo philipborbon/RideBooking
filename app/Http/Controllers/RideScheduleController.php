@@ -1,0 +1,117 @@
+<?php
+
+namespace RideBooking\Http\Controllers;
+
+use Illuminate\Http\Request;
+use RideBooking\RideSchedule;
+use RideBooking\Vehicle;
+
+class RideScheduleController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $schedules = RideSchedule::with('vehicle')->get();
+        return view('rideschedule.index', compact('schedules'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $vehicles = Vehicle::where('available', true)->get();
+        return view('rideschedule.create', compact('vehicles'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $schedule = $this->validate(request(), [
+            'vehicleid' => 'required|exists:vehicles,id',
+            'departuretime' => 'date_format:H:i|after:boardingtime',
+            'boardingtime' => 'date_format:H:i',
+            'date' => 'required|date',
+            'departed' => 'in:1,0'
+        ]);
+
+        RideSchedule::create($schedule);
+
+        return back()->with('success', 'Schedule has been added.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $schedule = RideSchedule::find($id);
+        $vehicles = Vehicle::where('available', true)->get();
+        return view('rideschedule.edit', compact('id', 'schedule', 'vehicles'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate(request(), [
+            'vehicleid' => 'required|exists:vehicles,id',
+            'departuretime' => 'date_format:H:i|after:boardingtime',
+            'boardingtime' => 'date_format:H:i',
+            'date' => 'required|date',
+            'departed' => 'in:1,0'
+        ]);
+
+        $schedule = RideSchedule::find($id);
+        $schedule->vehicleid = $request->get('vehicleid');
+        $schedule->departuretime = $request->get('departuretime');
+        $schedule->boardingtime = $request->get('boardingtime');
+        $schedule->date = $request->get('date');
+        $schedule->departed = $request->get('departed');
+
+        $schedule->save();
+
+        return redirect('rideschedules')->with('success','Schedule has been updated.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

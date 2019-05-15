@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('rideschedules', 'RideScheduleController');
 Route::resource('routes', 'RouteController');
 Route::resource('users','UserController');
 Route::resource('vehicles','VehicleController');
