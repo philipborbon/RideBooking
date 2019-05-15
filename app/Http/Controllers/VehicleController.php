@@ -58,7 +58,7 @@ class VehicleController extends Controller
 
         Vehicle::create($vehicle);
 
-        return back()->with('success', 'Vehicle has been added.');;
+        return back()->with('success', 'Vehicle has been added.');
     }
 
     /**
