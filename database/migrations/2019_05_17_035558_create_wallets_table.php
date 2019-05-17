@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVehicleAvailabilitiesTable extends Migration
+class CreateWalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateVehicleAvailabilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_availabilities', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('userid')->unsigned();
+            $table->double('amount', 8, 2)->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateVehicleAvailabilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicle_availabilities');
+        Schema::dropIfExists('wallets');
     }
 }

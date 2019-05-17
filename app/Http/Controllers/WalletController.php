@@ -3,9 +3,16 @@
 namespace RideBooking\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RideBooking\Wallet;
+use RideBooking\User;
 
-class VehicleAvailabilityController extends Controller
+class WalletController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,8 @@ class VehicleAvailabilityController extends Controller
      */
     public function index()
     {
-        //
+    	$wallets = Wallet::with('user')->get();
+    	return view('wallet.index', compact('wallets'));
     }
 
     /**
@@ -23,7 +31,8 @@ class VehicleAvailabilityController extends Controller
      */
     public function create()
     {
-        //
+    	$users = User::all();
+    	return view('wallet.create', compact('users'));
     }
 
     /**
@@ -34,7 +43,14 @@ class VehicleAvailabilityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $wallet = $this->validate(request(), [
+        	'userid' => 'required|exists:users,id|unique:wallets',
+            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/'
+        ]);
+
+        Wallet::create($wallet);
+
+        return back()->with('success', 'Wallet has been added.');
     }
 
     /**
@@ -56,7 +72,8 @@ class VehicleAvailabilityController extends Controller
      */
     public function edit($id)
     {
-        //
+    	$wallet = Wallet::with('user')->first();
+    	return view('wallet.edit', compact('id', 'wallet'));
     }
 
     /**
@@ -68,7 +85,16 @@ class VehicleAvailabilityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(), [
+        	'userid' => 'required|exists:users,id|unique:wallets,userid,'. $id,
+            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/'
+        ]);
+
+        $wallet = Wallet::find($id);
+        $wallet->amount = $request->amount;
+        $wallet->save();
+
+        return redirect('wallets')->with('success', 'Wallet has been updated.');
     }
 
     /**

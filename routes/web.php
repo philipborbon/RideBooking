@@ -23,6 +23,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('wallets', 'WalletController');
+
 Route::get('rideschedules/{id}/route', 'RideScheduleController@route');
 Route::patch('rideschedules/{id}/route', 'RideScheduleController@routeUpdate');
 Route::patch('rideschedules/{scheduleId}/route/{id}', [
