@@ -6,4 +6,10 @@ return [
 		'driver' => 'Driver',
 		'operator' => 'Operator'
 	],
+	'transactiontype' => [
+		'topup' => 'Topup', 
+		'redeem' => 'Redeem', 
+		'payment' => 'Payment', 
+		'boundary' => 'Boundary'
+	]
 ];
