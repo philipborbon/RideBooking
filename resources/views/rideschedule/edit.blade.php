@@ -48,6 +48,24 @@
     </div>
 
     <div class="row">
+
+        <div class="col-6">
+
+        <div class="form-group{{ $errors->has('boardingtime') ? ' has-error' : '' }}">
+            <label for="boardingtime" class="control-label">Boarding Time</label>
+
+            <input id="boardingtime" type="time" class="form-control" name="boardingtime" value="{{ date('H:i', strtotime($schedule->boardingtime)) }}" required autofocus>
+
+            @if ($errors->has('boardingtime'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('boardingtime') }}</strong>
+                </span>
+            @endif
+        </div>
+
+        </div>
+        
+
         <div class="col-6">
 
         <div class="form-group{{ $errors->has('departuretime') ? ' has-error' : '' }}">
@@ -63,26 +81,10 @@
         </div>
 
         </div>
-
-        <div class="col-6">
-
-        <div class="form-group{{ $errors->has('boardingtime') ? ' has-error' : '' }}">
-            <label for="boardingtime" class="control-label">Boarding Time</label>
-
-            <input id="boardingtime" type="time" class="form-control" name="boardingtime" value="{{ date('H:i', strtotime($schedule->departuretime)) }}" required autofocus>
-
-            @if ($errors->has('boardingtime'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('boardingtime') }}</strong>
-                </span>
-            @endif
-        </div>
-
-        </div>
     </div>
 
     <div class="row">
-        <div class="col-2">
+        <div class="col-4">
         <div class="form-group{{ $errors->has('departed') ? ' has-error' : '' }}">
             <label for="departed" class="control-label">Departed?</label>
 

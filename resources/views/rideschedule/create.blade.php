@@ -48,22 +48,6 @@
     <div class="row">
         <div class="col-6">
 
-        <div class="form-group{{ $errors->has('departuretime') ? ' has-error' : '' }}">
-            <label for="departuretime" class="control-label">Departure Time</label>
-
-            <input id="departuretime" type="time" class="form-control" name="departuretime" value="{{ old('departuretime') }}" required autofocus>
-
-            @if ($errors->has('departuretime'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('departuretime') }}</strong>
-                </span>
-            @endif
-        </div>
-
-        </div>
-
-        <div class="col-6">
-
         <div class="form-group{{ $errors->has('boardingtime') ? ' has-error' : '' }}">
             <label for="boardingtime" class="control-label">Boarding Time</label>
 
@@ -72,6 +56,23 @@
             @if ($errors->has('boardingtime'))
                 <span class="help-block">
                     <strong>{{ $errors->first('boardingtime') }}</strong>
+                </span>
+            @endif
+        </div>
+
+        </div>
+
+
+        <div class="col-6">
+
+        <div class="form-group{{ $errors->has('departuretime') ? ' has-error' : '' }}">
+            <label for="departuretime" class="control-label">Departure Time</label>
+
+            <input id="departuretime" type="time" class="form-control" name="departuretime" value="{{ old('departuretime') }}" required autofocus>
+
+            @if ($errors->has('departuretime'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('departuretime') }}</strong>
                 </span>
             @endif
         </div>

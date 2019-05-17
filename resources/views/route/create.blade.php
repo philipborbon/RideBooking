@@ -53,7 +53,7 @@
         <div class="form-group{{ $errors->has('distance') ? ' has-error' : '' }}">
             <label for="distance" class="control-label">Distance</label>
 
-            <input id="distance" type="number" class="form-control" name="distance" value="{{ old('distance') }}" required autofocus>
+            <input id="distance" type="number" step="0.01" min="0" class="form-control" name="distance" value="{{ old('distance') }}" required autofocus>
 
             @if ($errors->has('distance'))
                 <span class="help-block">
@@ -66,9 +66,9 @@
         <div class="col-4">
             
         <div class="form-group{{ $errors->has('eta') ? ' has-error' : '' }}">
-            <label for="eta" class="control-label">ETA</label>
+            <label for="eta" class="control-label">ETA (hrs)</label>
 
-            <input id="eta" type="number" class="form-control" name="eta" value="{{ old('eta') }}" required autofocus>
+            <input id="eta" type="number" step="0.01" min="0" class="form-control" name="eta" value="{{ old('eta') }}" required autofocus>
 
             @if ($errors->has('eta'))
                 <span class="help-block">
@@ -83,7 +83,7 @@
         <div class="form-group{{ $errors->has('regularfare') ? ' has-error' : '' }}">
             <label for="regularfare" class="control-label">Regular Fare</label>
 
-            <input id="regularfare" type="number" class="form-control" name="regularfare" value="{{ old('regularfare') }}" required autofocus>
+            <input id="regularfare" type="number" step="0.01" min="0" class="form-control" name="regularfare" value="{{ old('regularfare') }}" required autofocus>
 
             @if ($errors->has('regularfare'))
                 <span class="help-block">

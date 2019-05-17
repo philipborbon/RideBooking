@@ -16,8 +16,8 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Vehicle</th>
-              <th scope="col">Departure</th>
               <th scope="col">Boarding</th>
+              <th scope="col">Departure</th>
               <th scope="col">Departed</th>
               <th scope="col" colspan="3">Action</th>
             </tr>
@@ -27,10 +27,10 @@
             <tr>
               <th scope="row">{{$schedule->id}}</th>
               <td>{{$schedule->vehicle->description}}</td>
-              <td>{{date('H:i', strtotime($schedule->departuretime))}}</td>
               <td>{{date('H:i', strtotime($schedule->boardingtime))}}</td>
+              <td>{{date('H:i', strtotime($schedule->departuretime))}}</td>
               <td>{{$schedule->departed ? 'Yes' : 'No'}}</td>
-              <td><a href="{{action('RideScheduleController@edit', $schedule['id'])}}" class="btn btn-warning">Edit</a></td>
+              <td><a href="{{action('RideScheduleController@route', $schedule['id'])}}" class="btn btn-info">Routes</a></td>
               <td><a href="{{action('RideScheduleController@edit', $schedule['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>
                 <form action="{{action('RideScheduleController@destroy', $schedule['id'])}}" method="post">

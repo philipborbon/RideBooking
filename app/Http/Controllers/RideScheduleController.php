@@ -5,6 +5,8 @@ namespace RideBooking\Http\Controllers;
 use Illuminate\Http\Request;
 use RideBooking\RideSchedule;
 use RideBooking\Vehicle;
+use RideBooking\Route;
+use RideBooking\RideScheduleRoute;
 
 class RideScheduleController extends Controller
 {
@@ -113,5 +115,84 @@ class RideScheduleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Manage ride routes
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function route($id)
+    {
+        $schedule = RideSchedule::find($id);
+        $routes = Route::all();
+        $rideRoutes = RideScheduleRoute::with('route')->where('scheduleid', $id)->get();
+        return view('rideschedule.route', compact('id', 'schedule', 'routes', 'rideRoutes'));
+    }
+
+    /**
+     * Update ride routes
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function routeUpdate(Request $request, $id)
+    {
+        $route = $this->validate(request(), [
+            'scheduleid' => 'required|exists:ride_schedules,id',
+            'routeid' => 'required|exists:routes,id'
+        ]);
+
+        $rideRoute = RideScheduleRoute::where([
+            'scheduleid' => $request->scheduleid, 
+            'routeid' => $request->routeid
+        ])->first();
+
+        if ($rideRoute) {
+            return back()->with('error', 'Route already exist.');
+        } else {
+            $hasRecord = RideScheduleRoute::where('scheduleid', $request->scheduleid)->first();
+
+            if ( !$hasRecord ) {
+                $route['isMain'] = true;
+            }
+
+            RideScheduleRoute::create($route);
+
+
+            return back()->with('success', 'Route has been added.');
+        }
+    }
+
+    /**
+     * Mark route main
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function markMain($scheduleId, $id)
+    {
+        RideScheduleRoute::where('scheduleid', $scheduleId)->update(['isMain' => false]);
+
+        $route = RideScheduleRoute::find($id);
+        $route->isMain = true;
+
+        $route->save();
+
+        return back()->with('success', 'Main route has been updated.');
+    }
+
+    /**
+     * Remove the route from schedule
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyRoute($scheduleId, $id)
+    {
+        $route = RideScheduleRoute::find($id);
+        $route->delete();
+        return back()->with('success','Route has been deleted.');
     }
 }

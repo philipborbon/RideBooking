@@ -132,6 +132,6 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::find($id);
         $vehicle->delete();
-        return redirect('vehicles')->with('success','Vehicle has been  deleted.');
+        return redirect('vehicles')->with('success','Vehicle has been deleted.');
     }
 }

@@ -23,7 +23,18 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('rideschedules/{id}/route', 'RideScheduleController@route');
+Route::patch('rideschedules/{id}/route', 'RideScheduleController@routeUpdate');
+Route::patch('rideschedules/{scheduleId}/route/{id}', [
+	'uses' => 'RideScheduleController@markMain',
+	'as' => 'mark-main'
+]);
+Route::delete('rideschedules/{scheduleId}/route/{id}', [
+	'uses' => 'RideScheduleController@destroyRoute',
+	'as' => 'delete-route'
+]);
 Route::resource('rideschedules', 'RideScheduleController');
+
 Route::resource('routes', 'RouteController');
 Route::resource('users','UserController');
 Route::resource('vehicles','VehicleController');
