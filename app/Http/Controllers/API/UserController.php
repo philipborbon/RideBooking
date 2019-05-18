@@ -11,6 +11,7 @@ use Validator;
 use RideBooking\Http\Controllers\Controller;
 use RideBooking\User;
 use RideBooking\Helpers\Response as Response;
+use RideBooking\Wallet;
 
 class UserController extends Controller
 {
@@ -82,6 +83,11 @@ class UserController extends Controller
         $input['password'] = bcrypt($input['password']);
 
         $user = User::create($input);
+        Wallet::create([
+            'userid' => $user->id,
+            'amount' => 0
+        ]);
+
 
         $token = $user->createToken('RideBooking');
 

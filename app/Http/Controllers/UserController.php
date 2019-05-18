@@ -5,6 +5,7 @@ namespace RideBooking\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use RideBooking\User;
+use RideBooking\Wallet;
 
 class UserController extends Controller
 {
@@ -52,7 +53,11 @@ class UserController extends Controller
 
         $user['password'] = bcrypt($user['password']);
 
-        User::create($user);
+        $user = User::create($user);
+        Wallet::create([
+            'userid' => $user->id,
+            'amount' => 0
+        ]);
 
         return back()->with('success', 'User has been added.');;
     }
@@ -122,7 +127,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect('users')->with('success','User has been  deleted.');
+        return redirect('users')->with('success','User has been deleted.');
     }
 
 /** 
