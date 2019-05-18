@@ -69,7 +69,7 @@ class Response
     const HTTP_NOT_EXTENDED = 510;                                                // RFC2774
     const HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511;                             // RFC6585
 
-    var $message;
+    var $message = 'Success'; // default message
     var $data;
 
     public static $status_text = array (

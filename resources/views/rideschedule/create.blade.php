@@ -81,7 +81,7 @@
     </div>
 
     <div class="row">
-        <div class="col-2">
+        <div class="col-4">
         <div class="form-group{{ $errors->has('departed') ? ' has-error' : '' }}">
             <label for="departed" class="control-label">Departed?</label>
 
@@ -93,6 +93,22 @@
             @if ($errors->has('departed'))
                 <span class="help-block">
                     <strong>{{ $errors->first('departed') }}</strong>
+                </span>
+            @endif
+        </div>
+        </div>
+        <div class="col-4">
+        <div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
+            <label for="active" class="control-label">Active?</label>
+
+            <select id="active" class="form-control" name="active" autofocus>
+                <option value="1" @if (old('active', 1) == 1) selected @endif>True</option>
+                <option value="0" @if (old('active', 1) == 0) selected @endif>False</option>
+            </select>
+
+            @if ($errors->has('active'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('active') }}</strong>
                 </span>
             @endif
         </div>

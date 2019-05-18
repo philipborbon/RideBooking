@@ -100,6 +100,22 @@
             @endif
         </div>
         </div>
+        <div class="col-4">
+        <div class="form-group{{ $errors->has('active') ? ' has-error' : '' }}">
+            <label for="active" class="control-label">Active?</label>
+
+            <select id="active" class="form-control" name="active" autofocus>
+                <option value="1" @if ( old('active', $schedule->active) == 1) selected @endif>True</option>
+                <option value="0" @if ( old('active', $schedule->active) == 0) selected @endif>False</option>
+            </select>
+
+            @if ($errors->has('active'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('active') }}</strong>
+                </span>
+            @endif
+        </div>
+        </div>
     </div>
 
     <div class="form-group">

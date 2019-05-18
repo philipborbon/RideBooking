@@ -50,7 +50,8 @@ class RideScheduleController extends Controller
             'departuretime' => 'date_format:H:i|after:boardingtime',
             'boardingtime' => 'date_format:H:i',
             'date' => 'required|date',
-            'departed' => 'in:1,0'
+            'departed' => 'in:1,0',
+            'active' => 'in:1,0'
         ]);
 
         RideSchedule::create($schedule);
@@ -96,7 +97,8 @@ class RideScheduleController extends Controller
             'departuretime' => 'date_format:H:i|after:boardingtime',
             'boardingtime' => 'date_format:H:i',
             'date' => 'required|date',
-            'departed' => 'in:1,0'
+            'departed' => 'in:1,0',
+            'active' => 'in:1,0'
         ]);
 
         $schedule = RideSchedule::find($id);
@@ -105,6 +107,7 @@ class RideScheduleController extends Controller
         $schedule->boardingtime = $request->get('boardingtime');
         $schedule->date = $request->get('date');
         $schedule->departed = $request->get('departed');
+        $schedule->active = $request->get('active');
 
         $schedule->save();
 

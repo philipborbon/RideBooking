@@ -38,7 +38,6 @@ class UserController extends Controller
                 'user' => $user
             ];
 
-            $response->message = 'Success';
             $response->data = $login;
 
             return response()->json($response, Response::HTTP_OK);
