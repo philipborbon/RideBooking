@@ -14,7 +14,13 @@ use RideBooking\Helpers\Response as Response;
 
 class RideScheduleController extends Controller
 {
-    public function schedules(){
+    public function activeSchedules(){
+        $response = new Response;
         
+        $list = RideSchedule::with('vehicle', 'routes', 'routes.route')->where('active', true)->get();
+
+        $response->data = $list;
+
+        return response()->json($response, Response::HTTP_OK);
     }
 }
