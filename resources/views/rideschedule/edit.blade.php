@@ -20,7 +20,7 @@
 
         <select id="vehicleid" class="form-control" name="vehicleid" autofocus>
           @foreach($vehicles as $vehicle)
-            <option value="{{ $vehicle->id }}" {{ $schedule->vehicleid == $vehicle->id ? 'selected' : '' }}>{{ $vehicle->description }}</option>
+            <option value="{{ $vehicle->id }}" {{ old('vehicleid', $schedule->vehicleid) == $vehicle->id ? 'selected' : '' }}>{{ $vehicle->description }}</option>
           @endforeach
         </select>
 
@@ -36,7 +36,7 @@
             <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
                 <label for="date" class="control-label">Date</label>
 
-                <input id="date" type="date" class="form-control" name="date" value="{{ $schedule->date }}" required autofocus>
+                <input id="date" type="date" class="form-control" name="date" value="{{ old('date', $schedule->date) }}" required autofocus>
 
                 @if ($errors->has('date'))
                     <span class="help-block">
@@ -54,7 +54,7 @@
         <div class="form-group{{ $errors->has('boardingtime') ? ' has-error' : '' }}">
             <label for="boardingtime" class="control-label">Boarding Time</label>
 
-            <input id="boardingtime" type="time" class="form-control" name="boardingtime" value="{{ date('H:i', strtotime($schedule->boardingtime)) }}" required autofocus>
+            <input id="boardingtime" type="time" class="form-control" name="boardingtime" value="{{ old('boardingtime', date('H:i', strtotime($schedule->boardingtime))) }}" required autofocus>
 
             @if ($errors->has('boardingtime'))
                 <span class="help-block">
@@ -71,7 +71,7 @@
         <div class="form-group{{ $errors->has('departuretime') ? ' has-error' : '' }}">
             <label for="departuretime" class="control-label">Departure Time</label>
 
-            <input id="departuretime" type="time" class="form-control" name="departuretime" value="{{ date('H:i', strtotime($schedule->departuretime)) }}" required autofocus>
+            <input id="departuretime" type="time" class="form-control" name="departuretime" value="{{ old('departuretime', date('H:i', strtotime($schedule->departuretime))) }}" required autofocus>
 
             @if ($errors->has('departuretime'))
                 <span class="help-block">
@@ -89,8 +89,8 @@
             <label for="departed" class="control-label">Departed?</label>
 
             <select id="departed" class="form-control" name="departed" autofocus>
-                <option value="1" @if ( $schedule->departed == 1) selected @endif>True</option>
-                <option value="0" @if ( $schedule->departed == 0) selected @endif>False</option>
+                <option value="1" @if ( old('departed', $schedule->departed) == 1) selected @endif>True</option>
+                <option value="0" @if ( old('departed', $schedule->departed) == 0) selected @endif>False</option>
             </select>
 
             @if ($errors->has('departed'))

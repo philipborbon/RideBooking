@@ -21,7 +21,7 @@
         <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
             <label for="firstname" class="control-label">First Name</label>
 
-            <input id="firstname" type="text" class="form-control" name="firstname" value="{{ $user->firstname }}" required autofocus>
+            <input id="firstname" type="text" class="form-control" name="firstname" value="{{ old('firstname', $user->firstname) }}" required autofocus>
 
             @if ($errors->has('firstname'))
                 <span class="help-block">
@@ -35,7 +35,7 @@
         <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
             <label for="lastname" class="control-label">Last Name</label>
 
-            <input id="lastname" type="text" class="form-control" name="lastname" value="{{ $user->lastname }}" required autofocus>
+            <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname', $user->lastname) }}" required autofocus>
 
             @if ($errors->has('lastname'))
                 <span class="help-block">
@@ -55,7 +55,7 @@
                 type="email"
                 class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                 name="email"
-                value="{{ $user->email }}"
+                value="{{ old('email', $user->email) }}"
                 required
         >
 
@@ -114,7 +114,7 @@
 
         <select id="usertype" class="form-control" name="usertype" autofocus>
           @foreach(config('enums.usertype') as $key => $value)
-            <option value="{{ $key }}" {{ $user->usertype == $key ? 'selected' : '' }}>{{ $value }}</option>
+            <option value="{{ $key }}" {{ old('usertype', $user->usertype) == $key ? 'selected' : '' }}>{{ $value }}</option>
           @endforeach
         </select>
 

@@ -21,7 +21,7 @@
         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
             <label for="description" class="control-label">Description</label>
 
-            <input id="description" type="text" class="form-control" name="description" value="{{ $vehicle->description }}" required autofocus>
+            <input id="description" type="text" class="form-control" name="description" value="{{ old('description', $vehicle->description) }}" required autofocus>
 
             @if ($errors->has('description'))
                 <span class="help-block">
@@ -39,7 +39,7 @@
         <div class="form-group{{ $errors->has('platenumber') ? ' has-error' : '' }}">
             <label for="platenumber" class="control-label">Plate #</label>
 
-            <input id="platenumber" type="text" class="form-control" name="platenumber" value="{{ $vehicle->platenumber }}" required autofocus>
+            <input id="platenumber" type="text" class="form-control" name="platenumber" value="{{ old('platenumber', $vehicle->platenumber) }}" required autofocus>
 
             @if ($errors->has('platenumber'))
                 <span class="help-block">
@@ -53,7 +53,7 @@
         <div class="form-group{{ $errors->has('cabnumber') ? ' has-error' : '' }}">
             <label for="cabnumber" class="control-label">Cab #</label>
 
-            <input id="cabnumber" type="text" class="form-control" name="cabnumber" value="{{ $vehicle->cabnumber }}" required autofocus>
+            <input id="cabnumber" type="text" class="form-control" name="cabnumber" value="{{ old('cabnumber', $vehicle->cabnumber) }}" required autofocus>
 
             @if ($errors->has('cabnumber'))
                 <span class="help-block">
@@ -73,7 +73,7 @@
 
             <select id="driverid" class="form-control" name="driverid" autofocus>
               @foreach($drivers as $driver)
-                <option value="{{ $driver->id }}" {{ $vehicle->driverid == $driver->id ? 'selected' : '' }}>{{ $driver->getFullname() }}</option>
+                <option value="{{ $driver->id }}" {{ old('driverid', $vehicle->driverid) == $driver->id ? 'selected' : '' }}>{{ $driver->getFullname() }}</option>
               @endforeach
             </select>
 
@@ -91,7 +91,7 @@
 
             <select id="operatorid" class="form-control" name="operatorid" autofocus>
               @foreach($operators as $operator)
-                <option value="{{ $operator->id }}" {{ $vehicle->operatorid == $operator->id ? 'selected' : '' }}>{{ $operator->getFullname() }}</option>
+                <option value="{{ $operator->id }}" {{ old('operatorid', $vehicle->operatorid) == $operator->id ? 'selected' : '' }}>{{ $operator->getFullname() }}</option>
               @endforeach
             </select>
 
@@ -111,7 +111,7 @@
         <div class="form-group{{ $errors->has('seats') ? ' has-error' : '' }}">
             <label for="seats" class="control-label"># Of Seats</label>
 
-            <input id="seats" type="number" min="1" class="form-control" name="seats" value="{{ $vehicle->seats }}" autofocus>
+            <input id="seats" type="number" min="1" class="form-control" name="seats" value="{{ old('seats', $vehicle->seats) }}" autofocus>
 
             @if ($errors->has('seats'))
                 <span class="help-block">
@@ -125,7 +125,7 @@
         <div class="form-group{{ $errors->has('boundary') ? ' has-error' : '' }}">
             <label for="boundary" class="control-label">Boundary</label>
 
-            <input id="boundary" type="number" min="0" step="10" class="form-control" name="boundary" value="{{ $vehicle->boundary }}" autofocus>
+            <input id="boundary" type="number" min="0" step="10" class="form-control" name="boundary" value="{{ old('boundary', $vehicle->boundary) }}" autofocus>
 
             @if ($errors->has('boundary'))
                 <span class="help-block">
@@ -140,8 +140,8 @@
             <label for="available" class="control-label">Available?</label>
 
             <select id="available" class="form-control" name="available" autofocus>
-                <option value="1" @if ($vehicle->available == 1) selected @endif>True</option>
-                <option value="0" @if ($vehicle->available == 0) selected @endif>False</option>
+                <option value="1" @if (old('available', $vehicle->available) == 1) selected @endif>True</option>
+                <option value="0" @if (old('available', $vehicle->available) selected @endif>False</option>
             </select>
 
             @if ($errors->has('available'))
