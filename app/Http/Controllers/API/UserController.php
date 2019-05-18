@@ -153,7 +153,7 @@ class UserController extends Controller
             $response->message = 'Invalid input.';
           }
 
-          return response()->json($errors, Response::HTTP_UNAUTHORIZED);
+          return response()->json($response, Response::HTTP_UNAUTHORIZED);
        }
 
        $input = $request->all();
