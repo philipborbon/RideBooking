@@ -15,14 +15,14 @@ class CreateTopupsTable extends Migration
     {
         Schema::create('topups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('walletid')->unsigned();
+            $table->integer('walletid')->unsigned()->nullable();
             $table->integer('transactionid')->unsigned()->nullable();
             $table->double('amount', 8, 2)->default(0);
             $table->string('topupcode')->nullable();
             $table->boolean('approved')->default(false);
             $table->timestamps();
 
-            $table->foreign('walletid')->references('id')->on('wallets');
+            $table->foreign('walletid')->references('id')->on('wallets')->onDelete('set null');
         });
     }
 

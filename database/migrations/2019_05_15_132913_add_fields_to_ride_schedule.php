@@ -20,7 +20,7 @@ class AddFieldsToRideSchedule extends Migration
             $table->date('date')->nullable();
             $table->boolean('departed')->default(false);
 
-            $table->foreign('vehicleid')->references('id')->on('vehicles');
+            $table->foreign('vehicleid')->references('id')->on('vehicles')->onDelete('cascade');
         });
     }
 

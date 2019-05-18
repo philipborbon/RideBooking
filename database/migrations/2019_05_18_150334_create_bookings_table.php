@@ -24,8 +24,8 @@ class CreateBookingsTable extends Migration
             $table->boolean('closed')->default(false);
             $table->timestamps();
 
-            $table->foreign('userid')->references('id')->on('users');
-            $table->foreign('ridescheduleid')->references('id')->on('ride_schedules');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('ridescheduleid')->references('id')->on('ride_schedules')->onDelete('cascade');
             $table->foreign('transactionid')->references('id')->on('wallet_transactions');
         });
     }

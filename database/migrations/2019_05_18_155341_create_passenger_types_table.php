@@ -21,7 +21,7 @@ class CreatePassengerTypesTable extends Migration
         });
 
         Schema::table('booking_seats', function (Blueprint $table) {
-            $table->foreign('typeid')->references('id')->on('passenger_types');
+            $table->foreign('typeid')->references('id')->on('passenger_types')->onDelete('cascade');
         });
     }
 

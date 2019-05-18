@@ -21,8 +21,8 @@ class CreateBookingSeatsTable extends Migration
             $table->integer('count')->default(0);
             $table->timestamps();
 
-            $table->foreign('bookingid')->references('id')->on('bookings');
-            $table->foreign('routeid')->references('id')->on('routes');
+            $table->foreign('bookingid')->references('id')->on('bookings')->onDelete('cascade');
+            $table->foreign('routeid')->references('id')->on('routes')->onDelete('cascade');
         });
     }
 

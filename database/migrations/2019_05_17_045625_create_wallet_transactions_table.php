@@ -21,8 +21,8 @@ class CreateWalletTransactionsTable extends Migration
             $table->enum('type', ['topup', 'redeem', 'payment', 'boundary']);
             $table->timestamps();
 
-            $table->foreign('fromwalletid')->references('id')->on('wallets');
-            $table->foreign('towalletid')->references('id')->on('wallets');
+            $table->foreign('fromwalletid')->references('id')->on('wallets')->onDelete('set null');
+            $table->foreign('towalletid')->references('id')->on('wallets')->onDelete('set null');
         });
 
         Schema::table('topups', function (Blueprint $table) {

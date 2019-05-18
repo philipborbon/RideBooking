@@ -22,7 +22,7 @@ class CreateRedeemsTable extends Migration
             $table->boolean('approved')->default(false);
             $table->timestamps();
 
-            $table->foreign('driverid')->references('id')->on('users');
+            $table->foreign('driverid')->references('id')->on('users')->onDelete('set null');
             $table->foreign('transactionid')->references('id')->on('wallet_transactions');
         });
     }
