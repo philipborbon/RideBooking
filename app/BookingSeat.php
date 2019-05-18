@@ -5,6 +5,7 @@ namespace RideBooking;
 use Illuminate\Database\Eloquent\Model;
 use RideBooking\Booking;
 use RideBooking\Route;
+use RideBooking\PassengerType;
 
 class BookingSeat extends Model
 {
@@ -16,5 +17,9 @@ class BookingSeat extends Model
 
 	public function route(){
 		return $this->belongsTo(Route::class, 'routeid');
+	}
+
+	public function type(){
+		return $this->belongsTo(PassengerType::class, 'typeid');
 	}
 }
