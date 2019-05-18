@@ -3,10 +3,13 @@
 namespace RideBooking\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Passport;
+use Carbon\Carbon;
+use Validator;
+
 use RideBooking\Http\Controllers\Controller;
 use RideBooking\User;
-use Illuminate\Support\Facades\Auth;
-use Validator;
 use RideBooking\Helpers\Response as Response;
 
 class UserController extends Controller
@@ -93,14 +96,33 @@ class UserController extends Controller
     * @return \Illuminate\Http\Response
     */
    public function login(){
-       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
-           $user = Auth::user();
-           $success['token'] =  $user->createToken('RiadeBooking')->accessToken;
-           return response()->json(['success' => $success], Response::HTTP_OK);
-       }
-       else{
-           return response()->json(['error'=>'Unauthorised'], 401);
-       }
+        $response = new Response;
+
+        if ( Auth::attempt(['email' => request('username'), 'password' => request('password')]) ) {
+
+            Passport::tokensExpireIn(Carbon::now()->addDays(30));
+            Passport::refreshTokensExpireIn(Carbon::now()->addDays(60));
+
+            $user = Auth::user();
+            $token = $user->createToken('RideBooking');
+
+            $expiration = $token->token->expires_at->diffInSeconds(Carbon::now());
+
+            $login = [
+                'tokentype' => "Bearer",
+                'token' => $token->accessToken,
+                'expiresin' => $expiration,
+                'user' => $user
+            ];
+
+            $response->message = 'Success';
+            $response->data = $login;
+
+            return response()->json($response, Response::HTTP_OK);
+        } else {
+            $response->message = 'Unauthorised';
+            return response()->json($response, 401);                             
+        }
    }
 
    /**
@@ -110,16 +132,28 @@ class UserController extends Controller
     */
    public function register(Request $request)
    {
+       $response = new Response;
+
        $validator = Validator::make($request->all(), [
            'firstname' => 'required|string',
            'lastname' => 'required|string',
-           'email' => 'required|email',
+           'email' => 'required|email|unique:users',
            'password' => 'required',
            'c_password' => 'required|same:password',
        ]);
 
        if ($validator->fails()) {
-           return response()->json(['error'=>$validator->errors()], Response::HTTP_UNAUTHORIZED);
+          $errors = $validator->errors();
+
+          if ($errors->has('email')) {
+            $response->message = 'Email address is already taken.';
+          } else if ($errors->has('c_password')) {
+            $response->message = 'Confirm password do not match with password.';
+          } else {
+            $response->message = 'Invalid input.';
+          }
+
+          return response()->json($errors, Response::HTTP_UNAUTHORIZED);
        }
 
        $input = $request->all();
@@ -127,10 +161,21 @@ class UserController extends Controller
 
        $user = User::create($input);
 
-       $success['token'] =  $user->createToken('RiadeBooking')->accessToken;
-       $success['firstname'] =  $user->firstname;
+        $token = $user->createToken('RideBooking');
 
-       return response()->json(['success'=>$success], Response::HTTP_OK);
+        $expiration = $token->token->expires_at->diffInSeconds(Carbon::now());
+
+        $login = [
+            'tokentype' => "Bearer",
+            'token' => $token->accessToken,
+            'expiresin' => $expiration,
+            'user' => $user
+        ];
+
+        $response->data = $login;
+        $response->message = "Account created.";
+
+       return response()->json($response, Response::HTTP_OK);
    }
 
    /**

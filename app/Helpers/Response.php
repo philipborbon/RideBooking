@@ -3,6 +3,7 @@ namespace RideBooking\Helpers;
 
 // This can be found in the Symfony\Component\HttpFoundation\Response class
 
+
 class Response
 {
     const HTTP_CONTINUE = 100;
@@ -67,6 +68,9 @@ class Response
     const HTTP_LOOP_DETECTED = 508;                                               // RFC5842
     const HTTP_NOT_EXTENDED = 510;                                                // RFC2774
     const HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511;                             // RFC6585
+
+    var $message;
+    var $data;
 
     public static $status_text = array (
         100 => 'Continue',
