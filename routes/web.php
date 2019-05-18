@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('passengertypes', 'PassengerTypeController');
 Route::resource('transactions', 'WalletTransactionController');
 Route::resource('topups', 'TopupController');
 Route::resource('wallets', 'WalletController');
