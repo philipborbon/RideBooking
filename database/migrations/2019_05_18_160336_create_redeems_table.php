@@ -19,7 +19,7 @@ class CreateRedeemsTable extends Migration
             $table->integer('transactionid')->unsigned()->nullable();
             $table->double('amount', 8, 2)->default(0);
             $table->string('redeemcode')->nullable();
-            $table->boolea('approved')->default(false);
+            $table->boolean('approved')->default(false);
             $table->timestamps();
 
             $table->foreign('driverid')->references('id')->on('users');
