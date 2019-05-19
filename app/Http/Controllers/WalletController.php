@@ -72,7 +72,7 @@ class WalletController extends Controller
      */
     public function edit($id)
     {
-    	$wallet = Wallet::with('user')->first();
+    	$wallet = Wallet::with('user')->where('id', $id)->first();
     	return view('wallet.edit', compact('id', 'wallet'));
     }
 
