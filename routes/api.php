@@ -25,4 +25,5 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('schedule/list', 'API\RideScheduleController@activeSchedules');
 	Route::get('wallet/detail', 'API\WalletController@detail');
 	Route::post('wallet/topup', 'API\WalletController@topup');
+	Route::get('wallet/topups', 'API\WalletController@topups');
 });

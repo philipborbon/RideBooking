@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Top-ups</h1>
+    <h1>Top-Up's</h1>
 
     @if (Session::has('message'))
       <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>

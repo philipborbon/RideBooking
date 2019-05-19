@@ -93,15 +93,17 @@ class TopupController extends Controller
             $wallet = Wallet::find($topup->walletid);
             $wallet->amount += $topup->amount;
 
-            $wallet->save();
-
             $transaction = [
                 'fromwalletid' => $wallet->id,
                 'amount' => $topup->amount,
                 'type' => 'topup'
             ];
 
-            WalletTransaction::create($transaction);
+            $transaction = WalletTransaction::create($transaction);
+
+            $topup->transactionid = $transaction->id;
+
+            $wallet->save();
         }
 
         $topup->approved = true;

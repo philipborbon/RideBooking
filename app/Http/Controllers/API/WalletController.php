@@ -60,4 +60,16 @@ class WalletController extends Controller
 
      	return response()->json($response, Response::HTTP_OK);
     }
+
+    public function topups(){
+        $response = new Response;
+
+        $user = Auth::user();
+        $wallet = Wallet::where('userid', $user->id)->first();
+        $topups = Topup::where('walletid', $wallet->id)->get();
+
+        $response->data = $topups;
+
+        return response()->json($response, Response::HTTP_OK);
+    }
 }
