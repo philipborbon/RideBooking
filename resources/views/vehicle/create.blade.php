@@ -138,8 +138,8 @@
             <label for="available" class="control-label">Available?</label>
 
             <select id="available" class="form-control" name="available" autofocus>
-                <option value="1" @if (old('available', 1) == 1) selected @endif>True</option>
-                <option value="0" @if (old('available', 1) == 0) selected @endif>False</option>
+                <option value="1" @if (old('available', 1) == 1) selected @endif>Yes</option>
+                <option value="0" @if (old('available', 1) == 0) selected @endif>No</option>
             </select>
 
             @if ($errors->has('available'))

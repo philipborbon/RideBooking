@@ -86,8 +86,8 @@
             <label for="departed" class="control-label">Departed?</label>
 
             <select id="departed" class="form-control" name="departed" autofocus>
-                <option value="1" @if (old('departed', 0) == 1) selected @endif>True</option>
-                <option value="0" @if (old('departed', 0) == 0) selected @endif>False</option>
+                <option value="1" @if (old('departed', 0) == 1) selected @endif>Yes</option>
+                <option value="0" @if (old('departed', 0) == 0) selected @endif>No</option>
             </select>
 
             @if ($errors->has('departed'))
@@ -102,8 +102,8 @@
             <label for="active" class="control-label">Active?</label>
 
             <select id="active" class="form-control" name="active" autofocus>
-                <option value="1" @if (old('active', 1) == 1) selected @endif>True</option>
-                <option value="0" @if (old('active', 1) == 0) selected @endif>False</option>
+                <option value="1" @if (old('active', 1) == 1) selected @endif>Yes</option>
+                <option value="0" @if (old('active', 1) == 0) selected @endif>No</option>
             </select>
 
             @if ($errors->has('active'))
