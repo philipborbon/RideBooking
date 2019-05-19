@@ -22,6 +22,6 @@ Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('user/details', 'API\UserController@details');
-
 	Route::get('schedule/list', 'API\RideScheduleController@activeSchedules');
+	Route::get('wallet/detail', 'API\WalletController@detail');
 });

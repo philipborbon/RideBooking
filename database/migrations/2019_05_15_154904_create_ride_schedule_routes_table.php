@@ -19,6 +19,9 @@ class CreateRideScheduleRoutesTable extends Migration
             $table->integer('routeid')->unsigned();
             $table->boolean('isMain')->default(false);
             $table->timestamps();
+
+            $table->foreign('scheduleid')->references('id')->on('ride_schedules')->onDelete('cascade');
+            $table->foreign('routeid')->references('id')->on('routes')->onDelete('cascade');
         });
     }
 

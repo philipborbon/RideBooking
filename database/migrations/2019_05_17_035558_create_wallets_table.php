@@ -18,6 +18,8 @@ class CreateWalletsTable extends Migration
             $table->integer('userid')->unsigned();
             $table->double('amount', 8, 2)->default(0);
             $table->timestamps();
+
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
