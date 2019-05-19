@@ -25,7 +25,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('passengertypes', 'PassengerTypeController');
 Route::resource('transactions', 'WalletTransactionController');
+
 Route::resource('topups', 'TopupController');
+Route::patch('topups/{id}/approve', 'TopupController@approve');
+
 Route::resource('wallets', 'WalletController');
 
 Route::get('rideschedules/{id}/route', 'RideScheduleController@route');

@@ -4,6 +4,8 @@ namespace RideBooking\Http\Controllers;
 
 use Illuminate\Http\Request;
 use RideBooking\Topup;
+use RideBooking\Wallet;
+use RideBooking\WalletTransaction;
 
 class TopupController extends Controller
 {
@@ -82,5 +84,30 @@ class TopupController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function approve(Request $request, $id){
+        $topup = Topup::find($id);
+
+        if( !$topup->approved ){
+            $wallet = Wallet::find($topup->walletid);
+            $wallet->amount += $topup->amount;
+
+            $wallet->save();
+
+            $transaction = [
+                'fromwalletid' => $wallet->id,
+                'amount' => $topup->amount,
+                'type' => 'topup'
+            ];
+
+            WalletTransaction::create($transaction);
+        }
+
+        $topup->approved = true;
+
+        $topup->save();
+
+        return redirect('topups')->with('success', 'Topup has beend approved');
     }
 }

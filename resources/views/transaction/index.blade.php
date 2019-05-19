@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+        <h1>Transactions</h1>
+
         @if (Session::has('message'))
           <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
         @endif
@@ -24,9 +26,17 @@
           <tbody>
             @foreach($transactions as $transaction)
             <tr>
-              <th scope="row">{{$route->id}}</th>
+              <th scope="row">{{$transaction->id}}</th>
               <td>{{$transaction->from->user->getFullname()}}</td>
-              <td>{{$transaction->to->user->getFullname()}}</td>
+              <td>
+                @php 
+                if ($transaction->to){
+                  echo $transaction->to->user->getFullname();
+                } else {
+                  echo 'N/A';
+                }
+                @endphp
+              </td>
               <td>{{number_format($transaction->amount, 2)}}</td>
               <td>{{$transaction->getType()}}</td>
               <td>{{$transaction->created_at->format('M d, Y H:i')}}</td>
