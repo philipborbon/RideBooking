@@ -15,8 +15,8 @@ class CreateWalletTransactionsTable extends Migration
     {
         Schema::create('wallet_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fromwalletid')->unsigned();
-            $table->integer('towalletid')->unsigned();
+            $table->integer('fromwalletid')->unsigned()->nullable();
+            $table->integer('towalletid')->unsigned()->nullable();
             $table->double('amount', 8, 2)->default(0);
             $table->enum('type', ['topup', 'redeem', 'payment', 'boundary']);
             $table->timestamps();

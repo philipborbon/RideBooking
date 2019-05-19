@@ -24,9 +24,6 @@ class UserController extends Controller
         $response = new Response;
 
         if ( Auth::attempt(['email' => request('username'), 'password' => request('password')]) ) {
-            Passport::tokensExpireIn(Carbon::now()->addDays(30));
-            Passport::refreshTokensExpireIn(Carbon::now()->addDays(60));
-
             $user = Auth::user();
             $token = $user->createToken('RideBooking');
 

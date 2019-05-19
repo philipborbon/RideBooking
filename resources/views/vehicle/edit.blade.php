@@ -125,7 +125,7 @@
         <div class="form-group{{ $errors->has('boundary') ? ' has-error' : '' }}">
             <label for="boundary" class="control-label">Boundary</label>
 
-            <input id="boundary" type="number" min="0" step="10" class="form-control" name="boundary" value="{{ old('boundary', $vehicle->boundary) }}" autofocus>
+            <input id="boundary" type="number" min="0" step="0.01" class="form-control" name="boundary" value="{{ old('boundary', $vehicle->boundary) }}" autofocus>
 
             @if ($errors->has('boundary'))
                 <span class="help-block">

@@ -15,12 +15,12 @@ class AddFieldsToVehicles extends Migration
     {
         Schema::table('vehicles', function (Blueprint $table) {
             $table->string('description')->nullable();
-            $table->integer('driverid')->unsigned()->nullable():
+            $table->integer('driverid')->unsigned()->nullable();
             $table->integer('seats')->default(0);
             $table->string('platenumber')->nullable();
             $table->string('cabnumber')->nullable();
             $table->boolean('available')->default(true);
-            $table->integer('operatorid')->unsigned()->nullable():
+            $table->integer('operatorid')->unsigned()->nullable();
             $table->double('boundary')->nullable();
 
             $table->foreign('driverid')->references('id')->on('users')->onDelete('set null');

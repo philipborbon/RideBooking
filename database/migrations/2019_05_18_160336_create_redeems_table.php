@@ -15,7 +15,7 @@ class CreateRedeemsTable extends Migration
     {
         Schema::create('redeems', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('driverid')->unsigned();
+            $table->integer('driverid')->unsigned()->nullable();
             $table->integer('transactionid')->unsigned()->nullable();
             $table->double('amount', 8, 2)->default(0);
             $table->string('redeemcode')->nullable();
