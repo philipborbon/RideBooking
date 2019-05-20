@@ -48,10 +48,16 @@ class BookingController extends Controller
             $type = PassengerType::find($seat['typeid']);
             $route = Route::find($seat['routeid']);
 
-            $amount += $route->regularfare - (( $type->discount / 100 ) * $route->regularfare);
+            $amount += ($route->regularfare - (($type->discount / 100) * $route->regularfare)) * $seat['count'];
         }
 
         $user = Auth::user();
+        $wallet = Wallet::where('userid', $user->id)->first();
+
+        if ($wallet->amount < $amount) {
+            $response->message = "You have insufficient balance in your wallet.";
+            return response()->json($response, Response::HTTP_BAD_REQUEST);
+        }
 
         $booking = [
             'userid' => $user->id,
@@ -71,6 +77,13 @@ class BookingController extends Controller
 
         $booking->seats = $saved;
         $response->data = $booking;
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function passengerTypes(){
+        $response = new Response;
+        $response->data = $types = PassengerType::all();
 
         return response()->json($response, Response::HTTP_OK);
     }

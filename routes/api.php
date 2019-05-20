@@ -27,4 +27,5 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('wallet/topup', 'API\WalletController@topup');
 	Route::get('wallet/topups', 'API\WalletController@topups');
 	Route::post('booking/create', 'API\BookingController@create');
+	Route::get('booking/passengerTypes', 'API\BookingController@passengerTypes');
 });
