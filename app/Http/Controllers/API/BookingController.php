@@ -83,7 +83,17 @@ class BookingController extends Controller
 
     public function passengerTypes(){
         $response = new Response;
-        $response->data = $types = PassengerType::all();
+        $response->data = PassengerType::all();
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function history(){
+        $user = Auth::user();
+        $bookings = Booking::with('schedule', 'seats', 'seats.route', 'seats.type')->where('userid', $user->id)->orderBy('created_at', 'DESC')->get();
+
+        $response = new Response;
+        $response->data = $bookings;
 
         return response()->json($response, Response::HTTP_OK);
     }

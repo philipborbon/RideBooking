@@ -66,7 +66,7 @@ class WalletController extends Controller
 
         $user = Auth::user();
         $wallet = Wallet::where('userid', $user->id)->first();
-        $topups = Topup::where('walletid', $wallet->id)->get();
+        $topups = Topup::where('walletid', $wallet->id)->orderBy('created_at', 'DESC')->get();
 
         $response->data = $topups;
 
