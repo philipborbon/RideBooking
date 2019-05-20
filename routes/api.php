@@ -31,4 +31,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('booking/history', 'API\BookingController@history');
 	Route::post('wallet/redeem', 'API\WalletController@redeem');
 	Route::get('wallet/redeems', 'API\WalletController@redeems');
+	Route::get('booking/confirmed', 'API\BookingController@confirmed');
+	Route::get('schedule/driver', 'API\RideScheduleController@driverSchedules');
 });

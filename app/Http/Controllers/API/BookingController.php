@@ -97,4 +97,14 @@ class BookingController extends Controller
 
         return response()->json($response, Response::HTTP_OK);
     }
+
+    public function confirmed(){
+        $user = Auth::user();
+        $bookings = Booking::with('schedule', 'seats', 'seats.route', 'seats.type')->where('userid', $user->id)->where('approved', true)->orderBy('created_at', 'DESC')->get();
+
+        $response = new Response;
+        $response->data = $bookings;
+
+        return response()->json($response, Response::HTTP_OK);
+    }
 }

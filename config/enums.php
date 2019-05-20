@@ -9,7 +9,7 @@ return [
 	'transactiontype' => [
 		'topup' => 'Topup', 
 		'redeem' => 'Redeem', 
-		'payment' => 'Payment', 
+		'collection' => 'Collection', 
 		'boundary' => 'Boundary'
 	]
 ];
