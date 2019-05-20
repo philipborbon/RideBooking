@@ -8,10 +8,10 @@ use RideBooking\WalletTransaction;
 
 class Redeem extends Model
 {
-	protected $fillable = ['driverid', 'transactionid', 'amount', 'redeemcode', 'approved'];
+	protected $fillable = ['walletid', 'transactionid', 'amount', 'redeemcode', 'approved'];
 
-	public function driver(){
-		$this->belongsTo(User::class, 'driverid');
+	public function wallet(){
+		return $this->belongsTo(Wallet::class, 'walletid');
 	}
 
 	public function transaction(){

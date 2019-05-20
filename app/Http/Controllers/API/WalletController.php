@@ -14,6 +14,7 @@ use RideBooking\Helpers\Response as Response;
 use RideBooking\Helpers\Util as Util;
 use RideBooking\Wallet;
 use RideBooking\Topup;
+use RideBooking\Redeem;
 
 class WalletController extends Controller
 {
@@ -69,6 +70,51 @@ class WalletController extends Controller
         $topups = Topup::where('walletid', $wallet->id)->orderBy('created_at', 'DESC')->get();
 
         $response->data = $topups;
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function redeem(Request $request){
+        $response = new Response;
+
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/'
+        ]);
+
+        if ($validator->fails()){
+            $errors = $validator->errors();
+
+            if($errors->has('amount')){
+                $response->message = $errors->first('amount');
+            }
+
+            return response()->json($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        $user = Auth::user();
+        $wallet = Wallet::where('userid', $user->id)->first();
+
+        $redeem = [
+            'walletid' => $wallet->id,
+            'amount' => $request->amount,
+            'redeemcode' => Util::generateCode()
+        ];
+
+        $redeem = Redeem::create($redeem);
+
+        $response->data = $redeem->redeemcode;
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function redeems(){
+        $response = new Response;
+
+        $user = Auth::user();
+        $wallet = Wallet::where('userid', $user->id)->first();
+        $redeems = Redeem::where('walletid', $wallet->id)->orderBy('created_at', 'DESC')->get();
+
+        $response->data = $redeems;
 
         return response()->json($response, Response::HTTP_OK);
     }
