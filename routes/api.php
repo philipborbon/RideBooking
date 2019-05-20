@@ -21,7 +21,7 @@ Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
-	Route::get('user/details', 'API\UserController@details');
+	Route::get('user/detail', 'API\UserController@detail');
 	Route::get('schedule/list', 'API\RideScheduleController@activeSchedules');
 	Route::get('wallet/detail', 'API\WalletController@detail');
 	Route::post('wallet/topup', 'API\WalletController@topup');
@@ -33,4 +33,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('wallet/redeems', 'API\WalletController@redeems');
 	Route::get('booking/confirmed', 'API\BookingController@confirmed');
 	Route::get('schedule/driver', 'API\RideScheduleController@driverSchedules');
+	Route::get('user/driveravailable', 'API\UserController@isDriverAvailable');
+	Route::post('user/driveravailable', 'API\UserController@setDriverAvailable');
+	Route::post('user', 'API\UserController@update');
 });
