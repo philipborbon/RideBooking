@@ -33,6 +33,9 @@ Route::patch('bookings/{id}/cancel', 'BookingController@cancel');
 Route::resource('passengertypes', 'PassengerTypeController');
 Route::resource('transactions', 'WalletTransactionController');
 
+Route::resource('topups', 'TopupController');
+Route::patch('topups/{id}/approve', 'TopupController@approve');
+
 Route::resource('redeems', 'RedeemController');
 Route::patch('redeems/{id}/approve', 'RedeemController@approve');
 
