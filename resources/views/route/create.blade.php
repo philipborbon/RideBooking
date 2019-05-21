@@ -63,21 +63,7 @@
         </div>
 
         </div>
-        <div class="col-4">
-            
-        <div class="form-group{{ $errors->has('eta') ? ' has-error' : '' }}">
-            <label for="eta" class="control-label">ETA (hrs)</label>
-
-            <input id="eta" type="number" step="0.01" min="0" class="form-control" name="eta" value="{{ old('eta') }}" required autofocus>
-
-            @if ($errors->has('eta'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('eta') }}</strong>
-                </span>
-            @endif
-        </div>
-
-        </div>
+        
         <div class="col-4">
             
         <div class="form-group{{ $errors->has('regularfare') ? ' has-error' : '' }}">

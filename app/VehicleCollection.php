@@ -8,7 +8,7 @@ use RideBooking\Vehicle;
 
 class VehicleCollection extends Model
 {
-	protected $fillable = ['driverid', 'vehicleid', 'amount'];
+	protected $fillable = ['driverid', 'vehicleid', 'amount', 'fordate', 'processed'];
 
 	public function driver(){
 		return $this->belongsTo(User::class, 'driverid');

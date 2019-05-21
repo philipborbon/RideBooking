@@ -26,7 +26,11 @@
               <th scope="row">{{$user->id}}</th>
               <td>{{$user->getFullname()}}</td>
               <td>{{$user->getUserType()}}</td>
-              <td><a href="{{action('UserController@edit', $user['id'])}}" class="btn btn-warning">Edit</a></td>
+              <td>
+                @if ( $user->email != 'admin@cashlessride.me' )
+                <a href="{{action('UserController@edit', $user['id'])}}" class="btn btn-warning">Edit</a>
+                @endif
+              </td>
               <td>
                 @if ( $user->email != 'admin@cashlessride.me' )
                 <form action="{{action('UserController@destroy', $user['id'])}}" method="post">

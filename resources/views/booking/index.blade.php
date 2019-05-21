@@ -47,7 +47,7 @@
             </form>
             @endif
           </td>
-          <td align="right">
+          <td>
             @if (!$booking->closed && !$booking->approved)
             <form action="{{action('BookingController@cancel', $booking['id'])}}" method="post">
               {{csrf_field()}}

@@ -7,6 +7,7 @@ use RideBooking\Booking;
 use RideBooking\User;
 use RideBooking\Wallet;
 use RideBooking\WalletTransaction;
+use RideBooking\VehicleCollection;
 
 class BookingController extends Controller
 {
@@ -89,17 +90,36 @@ class BookingController extends Controller
     }
 
     public function approve(Request $request, $id){
-        $booking = Booking::find($id);
+        $booking = Booking::with('schedule')->first();
 
         if( !$booking->approved ){
             $user = User::with('wallet')->where('id', $booking->userid)->first();
             $wallet = $user->wallet;
 
-            if ( $booking->payment > $wallet->amount ) {
+            $payment = $booking->payment;
+
+            if ( $payment > $wallet->amount ) {
                 return redirect('bookings')->with('error', 'Unable to process. ' . $user->firstname . '\'s Wallet has insufficient balance.');
             }
 
-            $wallet->amount -= $booking->payment;
+            $wallet->amount -= $payment;
+
+            $collection = VehicleCollection::where('vehicleid', $booking->schedule->vehicleid)
+                ->where('fordate', $booking->schedule->date)->first();
+
+            if( $collection ){
+                $collection->amount += $payment;
+                $collection->save();
+            } else {
+                $collection = [
+                    'driverid' => $booking->schedule->vehicle->driver->id,
+                    'vehicleid' => $booking->schedule->vehicleid,
+                    'amount' => $payment, 
+                    'fordate' => $booking->schedule->date
+                ];
+
+                VehicleCollection::create($collection);
+            }
 
             $transaction = [
                 'fromwalletid' => $wallet->id,

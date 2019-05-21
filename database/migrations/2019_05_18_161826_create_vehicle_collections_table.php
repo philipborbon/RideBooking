@@ -15,10 +15,13 @@ class CreateVehicleCollectionsTable extends Migration
     {
         Schema::create('vehicle_collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('driverid')->unsigned();
-            $table->integer('vehicleid')->unsigned();
+            $table->integer('driverid')->unsigned()->nullable();
+            $table->integer('vehicleid')->unsigned()->nullable();
             $table->double('amount', 8, 2)->default(0);
             $table->timestamps();
+
+            $table->foreign('driverid')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('vehicleid')->references('id')->on('vehicles')->onDelete('set null');
         });
     }
 
