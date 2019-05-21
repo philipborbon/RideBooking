@@ -95,7 +95,7 @@ class BookingController extends Controller
     }
 
     public function approve(Request $request, $id){
-        $booking = Booking::with('schedule')->first();
+        $booking = Booking::with('schedule')->where('id', $id)->first();
 
         if( !$booking->approved ){
             $user = User::with('wallet')->where('id', $booking->userid)->first();
