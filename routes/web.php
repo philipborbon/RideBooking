@@ -23,11 +23,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('bookings', 'BookingController');
+Route::patch('bookings/{id}/approve', 'BookingController@approve');
+Route::patch('bookings/{id}/cancel', 'BookingController@cancel');
+
 Route::resource('passengertypes', 'PassengerTypeController');
 Route::resource('transactions', 'WalletTransactionController');
-
-Route::resource('topups', 'TopupController');
-Route::patch('topups/{id}/approve', 'TopupController@approve');
 
 Route::resource('redeems', 'RedeemController');
 Route::patch('redeems/{id}/approve', 'RedeemController@approve');

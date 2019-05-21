@@ -18,7 +18,7 @@ class UpdateWalletTransactionType extends Migration
         });
 
         Schema::table('wallet_transactions', function (Blueprint $table) {
-            $table->enum('type', ['topup', 'redeem', 'collection', 'boundary']);
+            $table->enum('type', ['topup', 'redeem', 'payment', 'collection', 'boundary']);
         });
     }
 

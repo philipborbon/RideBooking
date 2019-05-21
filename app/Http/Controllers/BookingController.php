@@ -3,6 +3,10 @@
 namespace RideBooking\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RideBooking\Booking;
+use RideBooking\User;
+use RideBooking\Wallet;
+use RideBooking\WalletTransaction;
 
 class BookingController extends Controller
 {
@@ -13,7 +17,8 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::with('user')->get();
+        return view('booking.index', compact('bookings'));
     }
 
     /**
@@ -45,7 +50,8 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+        $booking = Booking::with('user', 'schedule', 'seats', 'seats.route', 'seats.type')->where('id', $id)->first();
+        return view('booking.detail', compact('booking'));
     }
 
     /**
@@ -80,5 +86,46 @@ class BookingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function approve(Request $request, $id){
+        $booking = Booking::find($id);
+
+        if( !$booking->approved ){
+            $user = User::with('wallet')->where('id', $booking->userid)->first();
+            $wallet = $user->wallet;
+
+            if ( $booking->payment > $wallet->amount ) {
+                return redirect('bookings')->with('error', 'Unable to process. ' . $user->firstname . '\'s Wallet has insufficient balance.');
+            }
+
+            $wallet->amount -= $booking->payment;
+
+            $transaction = [
+                'fromwalletid' => $wallet->id,
+                'amount' => $booking->payment,
+                'type' => 'payment'
+            ];
+
+            $transaction = WalletTransaction::create($transaction);
+
+            $booking->transactionid = $transaction->id;
+
+            $wallet->save();
+        }
+
+        $booking->approved = true;
+
+        $booking->save();
+
+        return redirect('bookings')->with('success', 'Booking has been confirmed.');
+    }
+
+    public function cancel(Request $request, $id){
+        $booking = Booking::find($id);
+        $booking->closed = true;
+        $booking->save();
+
+        return redirect('bookings')->with('success', 'Booking has been cancelled.');
     }
 }

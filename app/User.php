@@ -6,6 +6,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use RideBooking\Vehicle;
+use RideBooking\Wallet;
 
 class User extends Authenticatable
 {
@@ -54,5 +55,9 @@ class User extends Authenticatable
 
     public function operators() {
         return $this->hasMany(Vehicle::class, 'operatorid');
+    }
+
+    public function wallet(){
+        return $this->hasOne(Wallet::class, 'userid');
     }
 }

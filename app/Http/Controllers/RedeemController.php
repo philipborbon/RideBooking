@@ -115,6 +115,6 @@ class RedeemController extends Controller
 
         $redeem->save();
 
-        return redirect('redeems')->with('success', 'Topup has beend approved');
+        return redirect('redeems')->with('success', 'Redeem has beend approved.');
     }
 }

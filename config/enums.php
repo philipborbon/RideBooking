@@ -7,8 +7,9 @@ return [
 		'operator' => 'Operator'
 	],
 	'transactiontype' => [
-		'topup' => 'Topup', 
+		'topup' => 'Top-up', 
 		'redeem' => 'Redeem', 
+		'payment' => 'Payment',
 		'collection' => 'Collection', 
 		'boundary' => 'Boundary'
 	]
