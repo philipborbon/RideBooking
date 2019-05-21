@@ -9,6 +9,11 @@ use RideBooking\Wallet;
 
 class VehicleCollectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
