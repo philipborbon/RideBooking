@@ -29,6 +29,9 @@ Route::resource('transactions', 'WalletTransactionController');
 Route::resource('topups', 'TopupController');
 Route::patch('topups/{id}/approve', 'TopupController@approve');
 
+Route::resource('redeems', 'RedeemController');
+Route::patch('redeems/{id}/approve', 'RedeemController@approve');
+
 Route::resource('wallets', 'WalletController');
 
 Route::get('rideschedules/{id}/route', 'RideScheduleController@route');

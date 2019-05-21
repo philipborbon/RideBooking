@@ -3,9 +3,11 @@
 namespace RideBooking\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RideBooking\Redeem;
+use RideBooking\Wallet;
 use RideBooking\WalletTransaction;
 
-class WalletTransactionController extends Controller
+class RedeemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class WalletTransactionController extends Controller
      */
     public function index()
     {
-        $transactions = WalletTransaction::with('from', 'to')->orderBy('created_at', 'DESC')->get();
-        return view('transaction.index', compact('transactions'));
+        $redeems = Redeem::with('wallet')->get();
+        return view('redeem.index', compact('redeems'));
     }
 
     /**
@@ -82,5 +84,37 @@ class WalletTransactionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function approve(Request $request, $id){
+        $redeem = Redeem::find($id);
+
+        if( !$redeem->approved ){
+            $wallet = Wallet::with('user')->where('id', $redeem->walletid)->first();
+
+            if ( $redeem->amount > $wallet->amount ) {
+                return redirect('redeems')->with('error', 'Unable to process. ' . $wallet->user->firstname . '\'s Wallet has insufficient balance.');
+            }
+
+            $wallet->amount -= $redeem->amount;
+
+            $transaction = [
+                'fromwalletid' => $wallet->id,
+                'amount' => $redeem->amount,
+                'type' => 'redeem'
+            ];
+
+            $transaction = WalletTransaction::create($transaction);
+
+            $redeem->transactionid = $transaction->id;
+
+            $wallet->save();
+        }
+
+        $redeem->approved = true;
+
+        $redeem->save();
+
+        return redirect('redeems')->with('success', 'Topup has beend approved');
     }
 }

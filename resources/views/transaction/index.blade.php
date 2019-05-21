@@ -16,8 +16,7 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
+              <th scope="col">User</th>
               <th scope="col">Amount</th>
               <th scope="col">Type</th>
               <th scope="col">Date</th>
@@ -28,15 +27,6 @@
             <tr>
               <th scope="row">{{$transaction->id}}</th>
               <td>{{$transaction->from->user->getFullname()}}</td>
-              <td>
-                @php 
-                if ($transaction->to){
-                  echo $transaction->to->user->getFullname();
-                } else {
-                  echo 'N/A';
-                }
-                @endphp
-              </td>
               <td>{{number_format($transaction->amount, 2)}}</td>
               <td>{{$transaction->getType()}}</td>
               <td>{{$transaction->created_at->format('M d, Y H:i')}}</td>

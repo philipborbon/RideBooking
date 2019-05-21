@@ -3,9 +3,8 @@
 namespace RideBooking\Http\Controllers;
 
 use Illuminate\Http\Request;
-use RideBooking\WalletTransaction;
 
-class WalletTransactionController extends Controller
+class BookingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class WalletTransactionController extends Controller
      */
     public function index()
     {
-        $transactions = WalletTransaction::with('from', 'to')->orderBy('created_at', 'DESC')->get();
-        return view('transaction.index', compact('transactions'));
+        //
     }
 
     /**
