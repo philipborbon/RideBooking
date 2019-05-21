@@ -23,6 +23,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('collections', 'VehicleCollectionController');
+Route::patch('collections/{id}/approve', 'VehicleCollectionController@approve');
+
 Route::resource('bookings', 'BookingController');
 Route::patch('bookings/{id}/approve', 'BookingController@approve');
 Route::patch('bookings/{id}/cancel', 'BookingController@cancel');
