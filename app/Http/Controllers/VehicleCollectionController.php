@@ -99,6 +99,18 @@ class VehicleCollectionController extends Controller
         if( !$collection->processed ){
             $vehicle = $collection->vehicle;
 
+            if ( !$vehicle->operator ) {
+                return redirect('collections')->with('error', 'Unable to process collection. Vehicle doesn\'t have an operator and can\'t transfer operator\'s boundary.');
+            }
+
+            if ( !$collection->driver ) {
+                return redirect('collections')->with('error', 'Unable to process collection. Driver has beend removed and unable transfer driver\'s collection.');
+            }
+
+            if ( !$vehicle ) {
+                return redirect('collections')->with('error', 'Unable to process collection. Vehicle has been removed and can\'t identify operator and boundary for processing of operator\'s boundary.');
+            }
+
             $operatorWallet = $vehicle->operator->wallet;
             $driverWallet = $collection->driver->wallet;
 
