@@ -99,8 +99,11 @@ class BookingController extends Controller
     }
 
     public function confirmed(){
-        $user = Auth::user();
-        $bookings = Booking::with('schedule', 'seats', 'seats.route', 'seats.type')->where('userid', $user->id)->where('approved', true)->orderBy('created_at', 'DESC')->get();
+        $bookings = Booking::with('schedule', 'seats', 'seats.route', 'seats.type')
+        ->whereHas('schedule.vehicle', function($query) {
+            $user = Auth::user();
+            $query->where('vehicles.driverid', $user->id);
+        })->where('approved', true)->orderBy('created_at', 'DESC')->get();
 
         $response = new Response;
         $response->data = $bookings;

@@ -141,7 +141,7 @@
 
             <select id="available" class="form-control" name="available" autofocus>
                 <option value="1" @if (old('available', $vehicle->available) == 1) selected @endif>Yes</option>
-                <option value="0" @if (old('available', $vehicle->available) == 1) selected @endif>No</option>
+                <option value="0" @if (old('available', $vehicle->available) == 0) selected @endif>No</option>
             </select>
 
             @if ($errors->has('available'))
