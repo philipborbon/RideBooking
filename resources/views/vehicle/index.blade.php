@@ -26,13 +26,7 @@
             @foreach($vehicles as $vehicle)
             <tr>
               <th scope="row">{{$vehicle->id}}</th>
-              <td>
-                @php 
-                if ($vehicle->driver) {
-                  echo $vehicle->driver->getFullname();
-                }
-                @endphp
-              </td>
+              <td>{{$vehicle->driver ? $vehicle->driver->getFullname() : ""}}</td>
               <td>{{$vehicle->platenumber}}</td>
               <td>{{$vehicle->cabnumber}}</td>
               <td>{{$vehicle->description}}</td>

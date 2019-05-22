@@ -32,8 +32,8 @@
         @foreach($collections as $collection)
         <tr>
           <th scope="row">{{$collection->id}}</th>
-          <td>{{$collection->driver->getFullname()}}</td>
-          <td>{{$collection->vehicle->description}}</td>
+          <td>{{$collection->driver ? $collection->driver->getFullname() : ""}}</td>
+          <td>{{$collection->vehicle ? $collection->vehicle->description : ""}}</td>
           <td>{{$collection->fordate}}</td>
           <td>Php {{number_format($collection->amount, 2)}}</td>
           <td>

@@ -9,7 +9,7 @@
          <h3><small>Booking Code:</small> <b>{{ $booking->bookingcode }}</b></h3>
          <h3><small>Ammount:</small> <b>Php {{ number_format($booking->payment, 2) }}</b></h3>   
          <h3><small>Vehicle:</small> <b>{{ $booking->schedule->vehicle->description }}</b></h3>   
-         <h3><small>Driver:</small> <b>{{ $booking->schedule->vehicle->driver->getFullname() }}</b></h3>
+         <h3><small>Driver:</small> <b>{{ $booking->schedule->vehicle->driver ? $booking->schedule->vehicle->driver->getFullname() : "" }}</b></h3>
          <h3><small>Cab #:</small> <b>{{ $booking->schedule->vehicle->cabnumber }}</b></h3>
       </div>
       <div class="col-g">

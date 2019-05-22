@@ -26,7 +26,7 @@
             @foreach($transactions as $transaction)
             <tr>
               <th scope="row">{{$transaction->id}}</th>
-              <td>{{$transaction->from->user->getFullname()}}</td>
+              <td>{{$transaction->from ? $transaction->from->user->getFullname() : ""}}</td>
               <td>Php {{number_format($transaction->amount, 2)}}</td>
               <td>{{$transaction->getType()}}</td>
               <td>{{$transaction->created_at->format('M d, Y H:i')}}</td>
