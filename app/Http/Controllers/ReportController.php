@@ -190,7 +190,7 @@ class ReportController extends Controller
 		";
 
 		$reports = DB::select($query);
-		$title = "Vehicle's Yearly Income";
+		$title = "Vehicle's Daily Income";
 
 		return view('report.vehicle', compact('reports', 'title'));
 	}
