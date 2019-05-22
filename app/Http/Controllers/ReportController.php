@@ -7,6 +7,11 @@ use DB;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+	
 	public function passengerDailyPayment(){
 		$query = "
 			SELECT u.id, u.firstname, u.lastname, DATE_FORMAT(t.created_at, '%M %d, %Y') AS date, SUM(t.amount) AS amount
