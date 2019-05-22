@@ -119,14 +119,18 @@ class BookingController extends Controller
                 $collection->amount += $payment;
                 $collection->save();
             } else {
-                $collection = [
-                    'driverid' => $booking->schedule->vehicle->driver->id,
-                    'vehicleid' => $booking->schedule->vehicleid,
-                    'amount' => $payment, 
-                    'fordate' => $booking->schedule->date
-                ];
+                if ( $booking->schedule->vehicle->driver ) {
+                    $collection = [
+                        'driverid' => $booking->schedule->vehicle->driver->id,
+                        'vehicleid' => $booking->schedule->vehicleid,
+                        'amount' => $payment, 
+                        'fordate' => $booking->schedule->date
+                    ];
 
-                VehicleCollection::create($collection);
+                    VehicleCollection::create($collection);
+                } else {
+                    return redirect('bookings')->with('error', 'Unable to confirm booking, vehicle for this booking doesn\'t have a driver.');
+                }
             }
 
             $transaction = [
