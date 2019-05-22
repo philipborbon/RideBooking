@@ -137,7 +137,7 @@ class ReportController extends Controller
 
 
 		$reports = DB::select($query);
-		$title = "Operator's Daily boundary";
+		$title = "Operator's Daily Boundary";
 
 		return view('report.operator', compact('reports', 'title'));
 	}
@@ -190,7 +190,7 @@ class ReportController extends Controller
 		";
 
 		$reports = DB::select($query);
-		$title = "Vehicle's Yearly Collection";
+		$title = "Vehicle's Yearly Income";
 
 		return view('report.vehicle', compact('reports', 'title'));
 	}
@@ -205,7 +205,7 @@ class ReportController extends Controller
 		";
 
 		$reports = DB::select($query);
-		$title = "Vehicle's Montly Collection";
+		$title = "Vehicle's Montly Income";
 
 		return view('report.vehicle', compact('reports', 'title'));
 	}
@@ -220,7 +220,7 @@ class ReportController extends Controller
 		";
 
 		$reports = DB::select($query);
-		$title = "Vehicle's Yearly Collection";
+		$title = "Vehicle's Yearly Income";
 
 		return view('report.vehicle', compact('reports', 'title'));
 	}
