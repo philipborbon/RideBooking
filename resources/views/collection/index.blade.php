@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Redeems</h1>
+    <h1>Collections</h1>
 
     @if (Session::has('message'))
       <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
@@ -25,7 +25,7 @@
           <th scope="col">Vehicle</th>
           <th scope="col">Date</th>
           <th scope="col">Amount</th>
-          <th scope="col">Action</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -35,7 +35,7 @@
           <td>{{$collection->driver->getFullname()}}</td>
           <td>{{$collection->vehicle->description}}</td>
           <td>{{$collection->fordate}}</td>
-          <td>{{number_format($collection->amount, 2)}}</td>
+          <td>Php {{number_format($collection->amount, 2)}}</td>
           <td>
             @if( $collection->processed )
             Processed

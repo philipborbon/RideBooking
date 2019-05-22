@@ -28,7 +28,7 @@
           <th scope="row">{{$topup->id}}</th>
           <td>{{$topup->wallet->user->getFullname()}}</td>
           <td>{{$topup->topupcode}}</td>
-          <td>{{number_format($topup->amount, 2)}}</td>
+          <td>Php {{number_format($topup->amount, 2)}}</td>
           <td>
             @if( $topup->approved )
             Approved

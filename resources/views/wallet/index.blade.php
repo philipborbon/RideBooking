@@ -25,7 +25,7 @@
             <tr>
               <th scope="row">{{$wallet->id}}</th>
               <td>{{$wallet->user->getFullname()}}</td>
-              <td>{{number_format($wallet->amount, 2)}}</td>
+              <td>Php {{number_format($wallet->amount, 2)}}</td>
               <td><a href="{{action('WalletController@edit', $wallet['id'])}}" class="btn btn-warning">Edit</a></td>
             </tr>
             @endforeach

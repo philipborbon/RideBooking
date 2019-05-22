@@ -33,7 +33,7 @@
           <th scope="row">{{$booking->id}}</th>
           <td>{{$booking->user->getFullname()}}</td>
           <td>{{$booking->bookingcode}}</td>
-          <td>{{number_format($booking->payment, 2)}}</td>
+          <td>Php {{number_format($booking->payment, 2)}}</td>
           <td>
             @if($booking->closed)
               Cancelled

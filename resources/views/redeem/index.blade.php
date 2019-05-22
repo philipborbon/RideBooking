@@ -33,7 +33,7 @@
           <th scope="row">{{$redeem->id}}</th>
           <td>{{$redeem->wallet->user->getFullname()}}</td>
           <td>{{$redeem->redeemcode}}</td>
-          <td>{{number_format($redeem->amount, 2)}}</td>
+          <td>Php {{number_format($redeem->amount, 2)}}</td>
           <td>
             @if( $redeem->approved )
             Approved

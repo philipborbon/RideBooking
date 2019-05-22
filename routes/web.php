@@ -23,6 +23,23 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('reports', 'ReportController@index');
+Route::get('reports/PassengerDailyPayment', 'ReportController@passengerDailyPayment');
+Route::get('reports/PassengerMontlyPayment', 'ReportController@passengerMonthlyPayment');
+Route::get('reports/PassengerYearlyPayment', 'ReportController@passengerYearlyPayment');
+
+Route::get('reports/DriverDailyCollection', 'ReportController@driverDailyCollection');
+Route::get('reports/DriverMontlyCollection', 'ReportController@driverMonthlyCollection');
+Route::get('reports/DriverYearlyCollection', 'ReportController@driverYearlyCollection');
+
+Route::get('reports/OperatorDailyBoundary', 'ReportController@operatorDailyBoundary');
+Route::get('reports/OperatorMonthlyBoundary', 'ReportController@operatorMonthlyBoundary');
+Route::get('reports/OperatorYearlyBoundary', 'ReportController@operatorYearlyBoundary');
+
+Route::get('reports/VehicleDailylyIncome', 'ReportController@vehicleDailyIncome');
+Route::get('reports/VehicleMonthlyIncome', 'ReportController@vehicleMonthlyIncome');
+Route::get('reports/VehicleYearlyIncome', 'ReportController@vehicleYearlyIncome');
+
 Route::resource('collections', 'VehicleCollectionController');
 Route::patch('collections/{id}/approve', 'VehicleCollectionController@approve');
 
