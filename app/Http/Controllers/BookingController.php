@@ -112,10 +112,22 @@ class BookingController extends Controller
             $collection = VehicleCollection::where('vehicleid', $booking->schedule->vehicleid)
                 ->where('fordate', $booking->schedule->date)->first();
 
+            $shouldCreateNew = false;
+
             if( $collection ){
-                $collection->amount += $payment;
-                $collection->save();
+                if ( !$collection->processed ) {
+                    $collection->amount += $payment;
+                    $collection->save();
+
+                    $shouldCreateNew = false;
+                } else {
+                    $shouldCreateNew = true;
+                }
             } else {
+                $shouldCreateNew = true;
+            }
+
+            if ($shouldCreateNew) {
                 $collection = [
                     'driverid' => $booking->schedule->vehicle->driver->id,
                     'vehicleid' => $booking->schedule->vehicleid,
