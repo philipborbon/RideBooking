@@ -23,7 +23,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::with('user')->get();
+        $bookings = Booking::with('user')
+        ->orderBy('approved', 'ASC')
+        ->orderBy('created_at', 'DESC')->get();
         return view('booking.index', compact('bookings'));
     }
 
@@ -110,24 +112,13 @@ class BookingController extends Controller
             $wallet->amount -= $payment;
 
             $collection = VehicleCollection::where('vehicleid', $booking->schedule->vehicleid)
-                ->where('fordate', $booking->schedule->date)->first();
-
-            $shouldCreateNew = false;
+                ->where('fordate', $booking->schedule->date)
+                ->where('processed', false)->first();
 
             if( $collection ){
-                if ( !$collection->processed ) {
-                    $collection->amount += $payment;
-                    $collection->save();
-
-                    $shouldCreateNew = false;
-                } else {
-                    $shouldCreateNew = true;
-                }
+                $collection->amount += $payment;
+                $collection->save();
             } else {
-                $shouldCreateNew = true;
-            }
-
-            if ($shouldCreateNew) {
                 $collection = [
                     'driverid' => $booking->schedule->vehicle->driver->id,
                     'vehicleid' => $booking->schedule->vehicleid,

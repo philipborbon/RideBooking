@@ -40,10 +40,17 @@
             @if( $collection->processed )
             Processed
             @else
+            <?php $buttonText = "Process";?>
+            @if ( $collection->amount < $collection->vehicle->boundary )
+            <div class="alert alert-warning" role="alert">
+              Collection is lower than boundary.
+            </div>
+            <?php $buttonText = "Collect All As Boundary" ?>
+            @endif
             <form action="{{action('VehicleCollectionController@approve', $collection['id'])}}" method="post">
               {{csrf_field()}}
               <input name="_method" type="hidden" value="PATCH">
-              <button class="btn btn-warning" type="submit">Process</button>
+              <button class="btn btn-warning" type="submit">{{$buttonText}}</button>
             </form>
             @endif
           </td>

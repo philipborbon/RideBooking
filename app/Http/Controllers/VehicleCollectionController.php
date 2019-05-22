@@ -21,7 +21,9 @@ class VehicleCollectionController extends Controller
      */
     public function index()
     {
-        $collections = VehicleCollection::with('driver', 'vehicle')->orderBy('fordate', 'DESC')->get();
+        $collections = VehicleCollection::with('driver', 'vehicle')
+        ->orderBy('processed', 'ASC')
+        ->orderBy('fordate', 'DESC')->get();
         return view('collection.index', compact('collections'));
     }
 
