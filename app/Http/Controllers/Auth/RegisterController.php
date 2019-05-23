@@ -67,16 +67,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        $user = [
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]);
+        ];
 
-        if ( $user->email == 'admin@cashlessride.me' ) {
-            $user->usertype = 'operator';
+        if ( $user['email'] == 'admin@cashlessride.me' ) {
+            $user['usertype'] = 'operator';
         }
+
+        $user = User::create($user);
 
         Wallet::create([
             'userid' => $user->id,
