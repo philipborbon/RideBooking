@@ -47,7 +47,7 @@ class VehicleController extends Controller
     {
         $vehicle = $this->validate(request(), [
             'description' => 'nullable|string',
-            'driverid' => 'required|exists:users,id|unique:users',
+            'driverid' => 'required|exists:users,id|unique:vehicles',
             'seats' => 'nullable|regex:/^[1-9][0-9]*/|not_in:0',
             'platenumber' => 'nullable|string',
             'cabnumber' => 'nullable|string',
@@ -98,7 +98,7 @@ class VehicleController extends Controller
     {
         $this->validate(request(), [
             'description' => 'nullable|string',
-            'driverid' => 'required|exists:users,id',
+            'driverid' => 'required|exists:users,id|unique:vehicles,' . $id,
             'seats' => 'nullable|regex:/^[1-9][0-9]*/|not_in:0',
             'platenumber' => 'nullable|string',
             'cabnumber' => 'nullable|string',
