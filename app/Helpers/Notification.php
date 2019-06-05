@@ -15,6 +15,7 @@ class Notification
     const ACTION_TOPUP = "OPEN_ACTIVITY_TOPUP";
     const ACTION_PAID_BOOKING = "OPEN_ACTIVITY_PAID_BOOKING";
     const ACTION_REDEEM = "OPEN_ACTIVITY_REDEEM";
+    const ACTION_DRIVER_WALLET = "OPEN_ACTIVITY_DRIVER_WALLET";
 
     var $title = NULL;
     var $message = NULL;

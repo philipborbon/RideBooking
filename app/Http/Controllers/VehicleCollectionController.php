@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use RideBooking\VehicleCollection;
 use RideBooking\WalletTransaction;
 use RideBooking\Wallet;
+use RideBooking\Helpers\Notification;
 
 class VehicleCollectionController extends Controller
 {
@@ -96,6 +97,8 @@ class VehicleCollectionController extends Controller
     public function approve(Request $request, $id){
         $collection = VehicleCollection::find($id);
 
+        $driverCollectedAmount = 0;
+
         if( !$collection->processed ){
             $vehicle = $collection->vehicle;
 
@@ -136,6 +139,8 @@ class VehicleCollectionController extends Controller
                     'type' => 'collection'
                 ];
 
+                $driverCollectedAmount = $collectionAmount;
+
                 $driverWallet->amount += $collectionAmount;
                 $collectionTransaction = WalletTransaction::create($collectionTransaction);
 
@@ -157,6 +162,18 @@ class VehicleCollectionController extends Controller
         $collection->processed = true;
 
         $collection->save();
+
+        $user = $collection->driver;
+
+        if ( $user->push_token ) {
+            $notification = new Notification;
+            $notification->pushToken = $user->push_token;
+            $notification->title = "Collection Processed";
+            $notification->message = "Hi " . $user->firstname . ". Php " . number_format($driverCollectedAmount, 2) . " has been transferred to your wallet and ready for redeem.";
+            $notification->clickAction = Notification::ACTION_DRIVER_WALLET;
+
+            Notification::sendPushNotification($notification);
+        }
 
         return redirect('collections')->with('success', 'Collection has beend processed.');
     }
