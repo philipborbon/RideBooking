@@ -192,4 +192,38 @@ class UserController extends Controller
         return response()->json($response, Response::HTTP_OK);
     }
 
+    public function updateToken(Request $request){
+        $response = new Response;
+
+        $validator = Validator::make($request->all(), [
+            'push_token' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            $response->message = 'Invalid input.';
+
+            return response()->json($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        $user = Auth::user();
+        $user->push_token = $request->push_token;
+
+        $user->save();
+
+        $response->message = "Token updated.";
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function clearToken(){
+        $user = Auth::user();
+        $user->push_token = NULL;
+
+        $user->save();
+
+        $response = new Response;
+        $response->message = "Token cleared.";
+
+        return response()->json($response, Response::HTTP_OK);
+    }
 }

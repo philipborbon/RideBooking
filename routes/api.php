@@ -36,4 +36,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('user/driveravailable', 'API\UserController@isDriverAvailable');
 	Route::post('user/driveravailable', 'API\UserController@setDriverAvailable');
 	Route::post('user', 'API\UserController@update');
+	Route::post('user/updateToken', 'API\UserController@updateToken');
+	Route::delete('user/clearToken', 'API\UserController@clearToken');
 });
