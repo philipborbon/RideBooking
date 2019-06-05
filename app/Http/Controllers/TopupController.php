@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use RideBooking\Topup;
 use RideBooking\Wallet;
 use RideBooking\WalletTransaction;
+use RideBooking\Helpers\Notification;
 
 class TopupController extends Controller
 {
@@ -114,6 +115,18 @@ class TopupController extends Controller
         $topup->approved = true;
 
         $topup->save();
+
+        $user = $topup->wallet->user;
+
+        if ( $user->push_token ) {
+            $notification = new Notification;
+            $notification->pushToken = $user->push_token;
+            $notification->title = "Topup Approved";
+            $notification->message = "Hi " . $user->firstname . ". Your top-up with code: ". $topup->topupcode . " on " . $topup->created_at->format('M d, Y') . " has been approved.";
+            $notification->clickAction = Notification::ACTION_TOPUP;
+
+            Notification::sendPushNotification($notification);
+        }
 
         return redirect('topups')->with('success', 'Topup has beend approved');
     }
