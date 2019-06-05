@@ -182,6 +182,18 @@ class BookingController extends Controller
         $booking->closed = true;
         $booking->save();
 
+        $user = $booking->user;
+
+        if ( $user->push_token ) {
+            $notification = new Notification;
+            $notification->pushToken = $user->push_token;
+            $notification->title = "Booking Cancelled";
+            $notification->message = "Hi " . $user->firstname . ". Your booking with code: ". $booking->bookingcode . " for " . $booking->schedule->date->format('M d, Y') . " has been cancelled.";
+            $notification->clickAction = Notification::ACTION_BOOKING;
+
+            Notification::sendPushNotification($notification);
+        }
+
         return redirect('bookings')->with('success', 'Booking has been cancelled.');
     }
 }
