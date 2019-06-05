@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use RideBooking\Redeem;
 use RideBooking\Wallet;
 use RideBooking\WalletTransaction;
+use RideBooking\Helpers\Notification;
 
 class RedeemController extends Controller
 {
@@ -119,6 +120,18 @@ class RedeemController extends Controller
         $redeem->approved = true;
 
         $redeem->save();
+
+        $user = $redeem->wallet->user;
+
+        if ( $user->push_token ) {
+            $notification = new Notification;
+            $notification->pushToken = $user->push_token;
+            $notification->title = "Redeem Collected";
+            $notification->message = "Hi " . $user->firstname . ". You have collected your redeem on " . $redeem->created_at->format('M d, Y') . " with code: ". $redeem->redeemcode . ".";
+            $notification->clickAction = Notification::ACTION_REDEEM;
+
+            Notification::sendPushNotification($notification);
+        }
 
         return redirect('redeems')->with('success', 'Redeem has beend approved.');
     }
