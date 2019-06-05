@@ -8,6 +8,7 @@ use RideBooking\User;
 use RideBooking\Wallet;
 use RideBooking\WalletTransaction;
 use RideBooking\VehicleCollection;
+use RideBooking\Helpers\Notification;
 
 class BookingController extends Controller
 {
@@ -149,6 +150,29 @@ class BookingController extends Controller
         $booking->approved = true;
 
         $booking->save();
+
+        $user = $booking->user;
+        $driver = $booking->schedule->vehicle->driver;
+
+        if ( $user->push_token ) {
+            $notification = new Notification;
+            $notification->pushToken = $user->push_token;
+            $notification->title = "Booking Confirmed";
+            $notification->message = "Hi " . $user->firstname . ". Your booking with code: ". $booking->bookingcode . " for " . $booking->schedule->date->format('M d, Y') . " has been confirmed.";
+            $notification->clickAction = Notification::ACTION_BOOKING;
+
+            Notification::sendPushNotification($notification);
+        }
+
+        if ( $driver->push_token ) {
+            $notification = new Notification;
+            $notification->pushToken = $driver->push_token;
+            $notification->title = "Booking Paid";
+            $notification->message = "Hi " . $driver->firstname . ". Booking with code: ". $booking->bookingcode . " for " . $booking->schedule->date->format('M d, Y') . " has been paid.";
+            $notification->clickAction = Notification::ACTION_PAID_BOOKING;
+
+            Notification::sendPushNotification($notification);
+        }
 
         return redirect('bookings')->with('success', 'Booking has been confirmed.');
     }

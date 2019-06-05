@@ -10,6 +10,8 @@ class RideSchedule extends Model
 {
 	protected $fillable = ['vehicleid', 'departuretime', 'boardingtime', 'date', 'departed', 'active'];
 
+	protected $dates = ['date'];
+
 	public function vehicle(){
 		return $this->belongsTo(Vehicle::class, 'vehicleid');
 	}
